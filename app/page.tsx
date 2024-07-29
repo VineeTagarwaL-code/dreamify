@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { TheDream } from "@/components/the-dream";
 import {
   exportComponentAsJPEG,
@@ -11,25 +11,46 @@ import { Button } from "@/components/ui/button";
 export default function Home() {
   const componentRef = useRef(null);
   const [isExporting, setIsExporting] = useState(false);
+  const [isShareIconHovering, setIsShareIconHovering] = useState(false);
+
+  useEffect(() => {
+    let  hoverInterval ;
+    let hoverTimeout ;
+
+    const startHoverInterval = () => {
+      hoverInterval = setInterval(() => {
+        setIsShareIconHovering(true);
+        hoverTimeout = setTimeout(() => {
+          setIsShareIconHovering(false);
+        }, 3000);
+      }, 8000);
+    };
+
+    startHoverInterval();
+
+    return () => {
+      clearInterval(hoverInterval);
+      clearTimeout(hoverTimeout);
+    };
+  }, []);
 
   const handleExport = async () => {
     setIsExporting(true);
+    setIsShareIconHovering(false);
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    // Set the html2CanvasOptions to scale the component
     const html2CanvasOptions = {
-      scale: 4, // Adjust the scale for zoom effect
+      scale: 4,
       useCORS: true,
     };
     if (componentRef.current === null) return;
     await exportComponentAsPNG(componentRef, { html2CanvasOptions });
-
     setIsExporting(false);
   };
 
   return (
     <div
       className="relative min-h-screen text-white flex justify-center items-center bg-cover bg-center"
-      style={{ backgroundImage: "url('/back.jpg')" }}
+      style={{ backgroundImage: "url('https://i.imgur.com/YTKoQtA.png')" }}
       ref={componentRef}
     >
       <div className="absolute inset-0 bg-black opacity-50"></div>
@@ -38,7 +59,9 @@ export default function Home() {
         {!isExporting && (
           <Button
             variant="outline"
-            className="w-full mt-4 bg-transparent hover:bg-white border-none text-transparent hover:text-black"
+            className={`w-full mt-4 bg-transparent hover:bg-white border-none text-transparent hover:text-black transition-all duration-300 ${
+              isShareIconHovering ? 'bg-white text-black' : ''
+            }`}
             onClick={handleExport}
           >
             <ShareIcon className="mr-2 h-4 w-4" />
