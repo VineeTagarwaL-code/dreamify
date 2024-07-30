@@ -9,13 +9,24 @@ import {
 import { Button } from "@/components/ui/button";
 
 export default function Home() {
-  const componentRef = useRef(null);
+  const componentRef = useRef<HTMLDivElement>(null);
   const [isExporting, setIsExporting] = useState(false);
   const [isShareIconHovering, setIsShareIconHovering] = useState(false);
+  const videoRef = useRef(null);
 
   useEffect(() => {
-    let  hoverInterval ;
-    let hoverTimeout ;
+    if (videoRef.current) {
+      if (isExporting) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+    }
+  }, [isExporting]);
+
+  useEffect(() => {
+    let hoverInterval: NodeJS.Timeout;
+    let hoverTimeout: NodeJS.Timeout;
 
     const startHoverInterval = () => {
       hoverInterval = setInterval(() => {
@@ -36,33 +47,41 @@ export default function Home() {
 
   const handleExport = async () => {
     setIsExporting(true);
+
+
     setIsShareIconHovering(false);
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    const html2CanvasOptions = {
-      scale: 4,
-      useCORS: true,
-    };
     if (componentRef.current === null) return;
-    await exportComponentAsPNG(componentRef, { html2CanvasOptions });
+    await exportComponentAsPNG(componentRef);
     setIsExporting(false);
   };
 
   return (
     <div
       className="relative min-h-screen text-white flex justify-center items-center bg-cover bg-center"
-      style={{ backgroundImage: "url('https://i.imgur.com/YTKoQtA.png')" }}
       ref={componentRef}
     >
-      
+
+     <video
+      ref={videoRef}
+      autoPlay={!isExporting}
+      loop
+      muted
+      className="absolute top-0 left-0 w-full h-full object-cover"
+    >
+        <source src="https://videos.pexels.com/video-files/3175515/3175515-uhd_3840_2160_25fps.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+
       <div className="absolute inset-0 bg-black opacity-50"></div>
+
       <div className="relative z-10 p-4">
-         
         <TheDream />
         {!isExporting && (
           <Button
             variant="outline"
-            className={`w-full mt-4 bg-transparent hover:bg-white border-none text-transparent hover:text-black transition-all duration-300 ${
-              isShareIconHovering ? 'bg-white text-black' : ''
+            className={`w-full mt-4 bg-transparent hover:bg-cyan-700 border-none text-transparent hover:text-white transition-all duration-300 ${
+              isShareIconHovering ? 'bg-cyan-700 text-white' : ''
             }`}
             onClick={handleExport}
           >
@@ -75,7 +94,7 @@ export default function Home() {
   );
 }
 
-function ShareIcon(props) {
+function ShareIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}

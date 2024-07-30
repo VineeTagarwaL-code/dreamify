@@ -30,7 +30,7 @@ export function TheDream() {
 
   useEffect(() => {
     if (debouncedQuote) {
-      getTheQoute(dreamText);
+      getTheQoute(debouncedQuote);
     }
   }, [debouncedQuote]);
 
