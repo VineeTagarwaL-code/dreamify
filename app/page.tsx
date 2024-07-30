@@ -53,8 +53,10 @@ export default function Home() {
       style={{ backgroundImage: "url('https://i.imgur.com/YTKoQtA.png')" }}
       ref={componentRef}
     >
+      
       <div className="absolute inset-0 bg-black opacity-50"></div>
-      <div className="relative z-10">
+      <div className="relative z-10 p-4">
+         
         <TheDream />
         {!isExporting && (
           <Button
