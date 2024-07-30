@@ -53,14 +53,14 @@ export function TheDream() {
   return (
     <div className="relative w-full max-w-md">
       <div className="absolute inset-0 bg-[url('/placeholder.svg')] bg-cover bg-center bg-no-repeat opacity-50" />
-      <Card className="relative  bg-gradient-to-br from-[#111111] to-[#141414] p-6 grid gap-6 text-white border-none transition-all duration-1000 opacity-95 rounded-xl group-hover:opacity-100 group-hover:duration-200 animate-tilt z-40 shadow-black-glow">
+      <Card className="relative  bg-gradient-to-br from-[#111111] to-[#141414] py-6 px-10 grid gap-6 text-white border-none transition-all duration-1000 opacity-95 rounded-xl group-hover:opacity-100 group-hover:duration-200 animate-tilt z-40 shadow-black-glow ">
         <div className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
           <div className="grid gap-4">
             <div className="grid gap-2">
-              <h3 className="text-3xl font-semibold">
+              <h3 className="text-2xl font-semibold">
                 <input
                   placeholder="Your dream in short"
-                  className="text-gray-200 placeholder:text-gray-600 bg-transparent border-none w-full outline-none py-2"
+                  className="text-gray-200 placeholder:text-zinc-400  from-accent-foreground font-serif text-3xl  bg-transparent border-none w-full outline-none py-2"
                 />
               </h3>
               <div className="absolute right-2 top-2 h-10 w-10">
@@ -69,14 +69,14 @@ export function TheDream() {
                 </Link>
               </div>
 
-              <div className="text-muted-foreground text-xl">
+              <div className="text-muted-foreground font-serif text-2xl">
                 <textarea
                   placeholder="Elaborate your Dream..."
                   className="text-gray-200 placeholder:text-gray-600 bg-transparent border-none w-full outline-none py-2 h-24"
                   onChange={(e) => setDream(e.target.value)}
                 />
               </div>
-              <blockquote className="text-muted-foreground italic">
+              <blockquote className="text-muted-foreground font-serif italic">
                 {loading ? (
                   <div className="flex items-center justify-center">
                     Thinking a dream...
@@ -99,9 +99,11 @@ export function TheDream() {
               </div>
             </div>
           </div>
+          <Link href='https://x.com/vineetwts'>
           <div className="absolute bottom-2 right-2 text-sm text-muted-foreground">
             @vineetwts
           </div>
+          </Link>
         </div>
       </Card>
     </div>

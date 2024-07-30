@@ -1,18 +1,20 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import { TheDream } from "@/components/the-dream";
+import { Button } from "@/components/ui/button";
+import html2canvas from 'html2canvas';
 import {
   exportComponentAsJPEG,
   exportComponentAsPDF,
   exportComponentAsPNG,
 } from "react-component-export-image";
-import { Button } from "@/components/ui/button";
+
 
 export default function Home() {
   const componentRef = useRef<HTMLDivElement>(null);
   const [isExporting, setIsExporting] = useState(false);
   const [isShareIconHovering, setIsShareIconHovering] = useState(false);
-  const videoRef = useRef(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     if (videoRef.current) {
@@ -47,31 +49,24 @@ export default function Home() {
 
   const handleExport = async () => {
     setIsExporting(true);
-
-
-    setIsShareIconHovering(false);
     await new Promise((resolve) => setTimeout(resolve, 1000));
+    // Set the html2CanvasOptions to scale the component
+    const html2CanvasOptions = {
+      scale: 4, // Adjust the scale for zoom effect
+      useCORS: true,
+    };
     if (componentRef.current === null) return;
-    await exportComponentAsPNG(componentRef);
+    await exportComponentAsPNG(componentRef, { html2CanvasOptions });
+
     setIsExporting(false);
   };
 
   return (
     <div
       className="relative min-h-screen text-white flex justify-center items-center bg-cover bg-center"
+      style={{ backgroundImage: "url('https://images.pexels.com/photos/4256852/pexels-photo-4256852.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')" }}
       ref={componentRef}
     >
-
-     <video
-      ref={videoRef}
-      autoPlay={!isExporting}
-      loop
-      muted
-      className="absolute top-0 left-0 w-full h-full object-cover"
-    >
-        <source src="https://videos.pexels.com/video-files/3175515/3175515-uhd_3840_2160_25fps.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
 
       <div className="absolute inset-0 bg-black opacity-50"></div>
 
