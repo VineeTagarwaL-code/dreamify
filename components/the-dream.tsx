@@ -57,10 +57,10 @@ export function TheDream() {
         <div className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
           <div className="grid gap-4">
             <div className="grid gap-2">
-              <h3 className="text-2xl font-semibold">
+              <h3 className="text-2xl ">
                 <input
                   placeholder="Your dream in short"
-                  className="text-gray-200 placeholder:text-zinc-400  from-accent-foreground font-serif text-3xl  bg-transparent border-none w-full outline-none py-2"
+                  className="text-gray-200 placeholder:text-zinc-400 placeholder:font-semibold from-accent-foreground font-poppins text-3xl  bg-transparent border-none w-full outline-none py-2"
                 />
               </h3>
               <div className="absolute right-2 top-2 h-10 w-10">
@@ -69,14 +69,14 @@ export function TheDream() {
                 </Link>
               </div>
 
-              <div className="text-muted-foreground font-serif text-2xl">
+              <div className="text-muted-foreground font-MyFont text-2xl">
                 <textarea
                   placeholder="Elaborate your Dream..."
-                  className="text-gray-200 placeholder:text-gray-600 bg-transparent border-none w-full outline-none py-2 h-24"
+                  className="text-gray-200 placeholder:text-gray-600 placeholder:font-serif bg-transparent border-none w-full outline-none py-2 h-24"
                   onChange={(e) => setDream(e.target.value)}
                 />
               </div>
-              <blockquote className="text-muted-foreground font-serif italic">
+              <blockquote className="text-muted-foreground font-nunito ">
                 {loading ? (
                   <div className="flex items-center justify-center">
                     Thinking a dream...
@@ -91,7 +91,7 @@ export function TheDream() {
           </div>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <div className="font-medium">
+              <div className="font-medium font-mono">
                 <input
                   placeholder="Your name?"
                   className="text-gray-200 placeholder:text-gray-600 bg-transparent border-none w-full outline-none py-2"
@@ -100,7 +100,7 @@ export function TheDream() {
             </div>
           </div>
           <Link href='https://x.com/vineetwts'>
-          <div className="absolute bottom-2 right-2 text-sm text-muted-foreground">
+          <div className="absolute bottom-2 right-2 font-serif text-sm text-muted-foreground">
             @vineetwts
           </div>
           </Link>

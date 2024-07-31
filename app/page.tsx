@@ -75,12 +75,12 @@ export default function Home() {
         {!isExporting && (
           <Button
             variant="outline"
-            className={`w-full mt-4 bg-transparent hover:bg-cyan-700 border-none text-transparent hover:text-white transition-all duration-300 ${
-              isShareIconHovering ? 'bg-cyan-700 text-white' : ''
+            className={`w-full mt-4 bg-transparent hover:bg-neutral-900 border-none text-transparent hover:text-white transition-all duration-300 ${
+              isShareIconHovering ? 'bg-neutral-900 text-white' : ''
             }`}
             onClick={handleExport}
           >
-            <ShareIcon className="mr-2 h-4 w-4" />
+            <ShareIcon className="mr-2 h-4 w-4 font-MyFont" />
             Export
           </Button>
         )}
