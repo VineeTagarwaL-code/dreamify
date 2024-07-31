@@ -18,6 +18,14 @@ const config = {
       },
     },
     extend: {
+      fontFamily: {
+        // 'sans': ['ui-sans-serif', 'system-ui'],
+      'serif': ['ui-serif', 'Georgia'],
+      'mono': ['ui-monospace', 'SFMono-Regular'],
+        'poppins': ["Poppins", "sans-serif"],
+        'nunito': ['nunito', 'sans-serif'],
+      'MyFont': ['"My Font"', 'serif']
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

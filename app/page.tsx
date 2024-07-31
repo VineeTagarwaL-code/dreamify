@@ -1,16 +1,51 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { TheDream } from "@/components/the-dream";
+import { Button } from "@/components/ui/button";
+import html2canvas from 'html2canvas';
 import {
   exportComponentAsJPEG,
   exportComponentAsPDF,
   exportComponentAsPNG,
 } from "react-component-export-image";
-import { Button } from "@/components/ui/button";
+
 
 export default function Home() {
-  const componentRef = useRef(null);
+  const componentRef = useRef<HTMLDivElement>(null);
   const [isExporting, setIsExporting] = useState(false);
+  const [isShareIconHovering, setIsShareIconHovering] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      if (isExporting) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+    }
+  }, [isExporting]);
+
+  useEffect(() => {
+    let hoverInterval: NodeJS.Timeout;
+    let hoverTimeout: NodeJS.Timeout;
+
+    const startHoverInterval = () => {
+      hoverInterval = setInterval(() => {
+        setIsShareIconHovering(true);
+        hoverTimeout = setTimeout(() => {
+          setIsShareIconHovering(false);
+        }, 3000);
+      }, 8000);
+    };
+
+    startHoverInterval();
+
+    return () => {
+      clearInterval(hoverInterval);
+      clearTimeout(hoverTimeout);
+    };
+  }, []);
 
   const handleExport = async () => {
     setIsExporting(true);
@@ -29,19 +64,23 @@ export default function Home() {
   return (
     <div
       className="relative min-h-screen text-white flex justify-center items-center bg-cover bg-center"
-      style={{ backgroundImage: "url('/back.jpg')" }}
+      style={{ backgroundImage: "url('https://images.pexels.com/photos/4256852/pexels-photo-4256852.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')" }}
       ref={componentRef}
     >
+
       <div className="absolute inset-0 bg-black opacity-50"></div>
-      <div className="relative z-10">
+
+      <div className="relative z-10 p-4">
         <TheDream />
         {!isExporting && (
           <Button
             variant="outline"
-            className="w-full mt-4 bg-transparent hover:bg-white border-none text-transparent hover:text-black"
+            className={`w-full mt-4 bg-transparent hover:bg-neutral-900 border-none text-transparent hover:text-white transition-all duration-300 ${
+              isShareIconHovering ? 'bg-neutral-900 text-white' : ''
+            }`}
             onClick={handleExport}
           >
-            <ShareIcon className="mr-2 h-4 w-4" />
+            <ShareIcon className="mr-2 h-4 w-4 font-MyFont" />
             Export
           </Button>
         )}
@@ -50,7 +89,7 @@ export default function Home() {
   );
 }
 
-function ShareIcon(props) {
+function ShareIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}
